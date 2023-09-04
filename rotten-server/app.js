@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -8,6 +9,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+//DB Configuration
+mongoose.connect('mongodb://127.0.0.1:27017/alphasmovies',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('connected'))
+.catch(() => console.log('error connect'))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
