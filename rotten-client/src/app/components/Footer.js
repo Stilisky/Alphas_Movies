@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div><footer class="w-full bg-white text-gray-600">
+    <footer class="w-full bg-white text-gray-600">
 
     <div class="w-full p-10 space-y-2">
       <div class="">Questions? Call 000-800-040-1843
@@ -56,6 +56,6 @@ export default function Footer() {
       
     </div>
   
-  </footer></div>
+  </footer>
   )
 }
