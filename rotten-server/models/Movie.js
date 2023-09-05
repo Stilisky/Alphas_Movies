@@ -8,6 +8,7 @@ const movieSchema = mongoose.Schema({
    image: {type: String},
    fans: [{type: mongoose.Schema.Types.ObjectId, ref:'User'}],
    category: {type: mongoose.Schema.ObjectId, ref:'Category'},
+   genre: {type: mongoose.Schema.ObjectId, ref:'Genre'},
    comments: [{type: mongoose.Schema.Types.ObjectId, ref:'Comment'}],
    likes: [{type: mongoose.Schema.Types.ObjectId, ref:'Like'}]
 });
