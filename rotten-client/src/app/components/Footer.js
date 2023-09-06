@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <footer class="w-full bg-white text-gray-600">
+    <footer class="w-full bg-black text-gray-600">
 
     <div class="w-full p-10 space-y-2">
-      <div class="">Questions? Call 000-800-040-1843
+      <div class="">Questions? Call Alphas-000 000
       </div>
   
       <div class="flex flex-wrap w-full flex my-4">
@@ -43,6 +43,8 @@ export default function Footer() {
             <li class=""> Media Centre</li>
             <li class="">Terms of Use </li>
             <li class="">Contact Us </li>
+            <a href='/about'>About Us</a>            
+
           </ul>
         </div>
   
