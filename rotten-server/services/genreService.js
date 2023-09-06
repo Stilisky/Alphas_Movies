@@ -16,3 +16,7 @@ exports.createGenre = async (genre) => {
 exports.deleteGenre = async (id) =>  {
    return await genreModel.findByIdAndDelete(id)
 }
+
+exports.updateGenre = async (id, genre) => {
+   return await genreModel.findByIdAndUpdate(id, genre)
+}

@@ -5,6 +5,11 @@ exports.createLike = async (like) => {
    return await newlike.save()
 }
 
+exports.findLikeById = async (id) => {
+   const like = await likeModel.findById(id)
+   return like
+}
+ 
 exports.deleteLike = async (id) => {
    return await likeModel.findByIdAndDelete(id)
 }

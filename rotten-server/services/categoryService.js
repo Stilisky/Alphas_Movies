@@ -16,3 +16,7 @@ exports.createCategory = async (category) => {
 exports.deleteCategory = async (id) => {
    return await categoryModel.findByIdAndDelete(id)
 }
+
+exports.updateCategory = async (id, cat) => {
+   return await categoryModel.findByIdAndUpdate(id, cat)
+}
