@@ -8,5 +8,4 @@ router.route('/favorite/:userid/movie/:movieid').get(favoriteToUser)
 router.route('/genre/:genreid/movie/:movieid').get(genreToMovies)
 router.route('')
 
-
 module.exports = router;
