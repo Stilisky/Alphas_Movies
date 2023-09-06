@@ -3,7 +3,7 @@ import React from 'react'
 export default function Trust() {
     return (
         <>
-                <div class="container mx-auto mt-4 ">
+                <div class="container mx-auto mt-4  bg-white">
                     <div
                         x-data="
         {

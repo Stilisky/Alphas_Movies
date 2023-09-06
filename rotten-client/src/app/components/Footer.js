@@ -3,8 +3,10 @@ import React from 'react'
 export default function Footer() {
   return (
     <footer class="w-full bg-black text-gray-600">
+    <div class=" border-t bg-transparent opacity-25 border-gray-400 w-full my-4"></div>
 
     <div class="w-full p-10 space-y-2">
+
       <div class="">Questions? Call Alphas-000 000
       </div>
   
