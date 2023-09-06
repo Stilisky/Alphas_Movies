@@ -3,7 +3,7 @@ const commentService = require("../services/commentService")
 exports.getComments = async (req, res) => {
    try {
       const comments = await commentService.findAllComments()
-      res.json(comments)
+      res.status(201).json(comments)
    } catch (error) {
       res.status(400).json({error})
    }

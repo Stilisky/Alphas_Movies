@@ -3,7 +3,7 @@ const likeService = require("../services/likeService")
 exports.createLike = async (req, res) => {
    try {
       const like = await likeService.createLike(req.body)
-      res.json(like)
+      res.status(201).json(like)
    } catch (error) {
       res.status(400).json({error})
    }

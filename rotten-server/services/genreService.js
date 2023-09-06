@@ -9,7 +9,7 @@ exports.findGenreById = async (id) => {
 }
 
 exports.createGenre = async (genre) => {
-   const newGenre = new genreModel(...genre)
+   const newGenre = new genreModel(genre)
    return await newGenre.save()
 }
 

@@ -9,7 +9,7 @@ exports.findCommentById = async (id) => {
 }
 
 exports.createComment = async (comment) => {
-   const newCom = new commentModel(...comment)
+   const newCom = new commentModel(comment)
    return await newCom.save()
 }
 

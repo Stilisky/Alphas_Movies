@@ -21,7 +21,7 @@ exports.getCategory = async (req, res) => {
 exports.saveCategory = async (req, res) => {
    try {
       const cat = await categoryService.createCategory(req.body)
-      res.json(cat)
+      res.status(201).json(cat)
    } catch (error) {
       res.status(400).json({error})
    }

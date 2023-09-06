@@ -1,7 +1,7 @@
 const likeModel = require("../models/like")
 
 exports.createLike = async (like) => {
-   const newlike = new likeModel( ...like)
+   const newlike = new likeModel(like)
    return await newlike.save()
 }
 

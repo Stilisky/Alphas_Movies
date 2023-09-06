@@ -5,7 +5,7 @@ exports.findAllMovies = async () => {
 }
 
 exports.createMovies = async (movie) => {
-   const newMovie = new movieModel(...movie)
+   const newMovie = new movieModel(movie)
    return await newMovie.save();
 }
 

@@ -21,7 +21,7 @@ exports.getGenre = async (req, res) => {
 exports.saveGenre = async (req, res) => {
    try {
       const genre = genreService.createGenre(req.body)
-      res.json(genre)
+      res.status(201).json(genre)
    } catch (error) {
       res.status(400).json({error})
    }

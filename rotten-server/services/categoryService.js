@@ -9,7 +9,7 @@ exports.findCategoryById = async (id) => {
 }
 
 exports.createCategory = async (category) => {
-   const newCat = new categoryModel(...category)
+   const newCat = new categoryModel(category)
    return await newCat.save()
 }
 
