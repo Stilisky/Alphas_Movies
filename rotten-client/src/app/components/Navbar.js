@@ -29,8 +29,8 @@ function Navbar() {
 
   return (
     <nav className='w-full fixed z-40'>
-      <div className={`px-5 md:px-16 py-6 flex flex-row items-center transition duration-500 ${showBackground ? '' : 'bg-zinc-900 bg-opacity-90' }`}>
-        <p className='text-1xl md:text-2xl uppercase text-red-500'><strong>ALPHA'S MOVIES</strong></p>
+      <div className={`px-5 md:px-16 py-6 flex flex-row items-center transition duration-500 ${showBackground ? 'bg-zinc-900 bg-opacity-90' : '' }`}>
+        <p className='text-1xl md:text-2xl uppercase text-[#1ce783]'><strong>ALPHA'S MOVIES</strong></p>
         <div className='flex-row ml-8 gap-7 hidden lg:flex'>
           <NavbarItem item="HOME"/>
           <NavbarItem item="MOVIES"/>
