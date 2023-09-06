@@ -5,7 +5,7 @@ exports.findAllusers = async () => {
 } 
 
 exports.createUser = async (user) => {
-   const newUser = new userModel(...user)
+   const newUser = new userModel(user)
    return await newUser.save();
 }
 
