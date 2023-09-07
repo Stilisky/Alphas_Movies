@@ -1,11 +1,11 @@
 "use client"
 import React, { useState } from 'react'
 
-const UserModal = ({isOpen, onClose}) => {
-   const [username, setName] = useState("");
-   const [password, setPass] = useState("");
-   const [email, setEmail] = useState("");
+const UpdateUser = ({isOpen, closeModal, user, update}) => {
+   const [username, setName] = useState(user.username);
+   const [password, setPass] = useState(user.password);
    const [conf, setConf] = useState("");
+   const [email, setEmail] = useState(user.email);
    const [error, setError] = useState('')
 
    const changeUsername = (event) => {
@@ -25,24 +25,25 @@ const UserModal = ({isOpen, onClose}) => {
    }
 
    const closeMod = () => {
-      onClose()
+      closeModal()
    }
 
-   const createUser = async () => {
+   const updateUser = async () => {
       if (username && email && (password == conf)) {
-         const data = {
-            "username": username,
-            "email": email,
-            "password": password
-         }
          try {
-            const url = "http://127.0.0.1:5000/users"
+            const data = {
+               "username": username,
+               "email": email,
+               "password": password,
+            }
+            const url = "http://127.0.0.1:5000/users/" +user._id
             console.log(data);
-            await fetch(url, {method: 'POST', headers: {"content-Type": "application/json"}, body: JSON.stringify(data)});
-            onClose()
+            await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json"}, body: JSON.stringify(data)});
+            update()
          } catch (error) {
-            console.log(error);
+            
          }
+         closeModal()
       }
       else {
          setError("Invalid informations")
@@ -60,9 +61,9 @@ const UserModal = ({isOpen, onClose}) => {
                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                   </svg>
                </div>
-               <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Create User</h1>
+               <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Update User</h1>
                <label for="name" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Username</label>
-               <input id="name" onChange={changeUsername} required className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Username" />
+               <input id="name" onChange={changeUsername}  className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" value={username}/>
                <label for="email" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Email</label>
                <div className="relative mb-5 mt-2">
                      <div className="absolute text-gray-600 flex items-center px-4 border-r h-full">
@@ -70,17 +71,17 @@ const UserModal = ({isOpen, onClose}) => {
                            <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
                         </svg>
                      </div>
-                     <input onChange={changeEmail} required type='email' id="email" className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-16 text-sm border-gray-300 rounded border" placeholder="mail@mail.com" />
+                     <input onChange={changeEmail} type='email' id="email" className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-16 text-sm border-gray-300 rounded border" value={email} />
                </div>
 
                <label for="pass" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Password</label>
-               <input onChange={changePassword} type='password' required id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Password" />
-
-               <label for="conf" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirm Password</label>
-               <input onChange={changeConf} type='password' required id="conf" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Confirm Password" />
+               <input type='password' id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder='Password' onChange={changePassword} />
+               
+               <label for="confpass" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirm Password</label>
+               <input onChange={changeConf} type='password' id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder='Confirm password' />
 
                <div className="flex items-center justify-start w-full">
-                     <button onClick={createUser} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">Submit</button>
+                     <button onClick={updateUser} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">Update User</button>
                      <button className="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm" onClick={closeMod} >Cancel</button>
                </div>
                <button className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600" onClick={closeMod} aria-label="close modal" role="button">
@@ -97,4 +98,4 @@ const UserModal = ({isOpen, onClose}) => {
   )
 }
 
-export default UserModal
+export default UpdateUser
