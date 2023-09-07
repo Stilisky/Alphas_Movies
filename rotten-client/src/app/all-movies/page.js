@@ -13,7 +13,7 @@ export default function Home() {
 
   const fetchMovies = async () => {
     try{
-      const url = "http://127.0.0.1:5000/movies";
+      const url = "http://127.0.0.1:5000/categories";
       const response = await fetch(url);
       const data = await response.json();
       console.log(data);
@@ -28,7 +28,7 @@ export default function Home() {
     <main>
       <Billboard />
       <div className='pb-40'>
-        <MoviesLists text="Upcoming" data={movies} />
+        <MoviesLists data={movies} />
       </div>
     </main>
   )
