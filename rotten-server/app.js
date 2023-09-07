@@ -47,6 +47,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 app.use('/users', usersRouter);
 app.use('/movies', moviesRouter);
 app.use('/categories', categoriesRouter)

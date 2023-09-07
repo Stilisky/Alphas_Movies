@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { getAllUsers, getUserById, saveUser, updateUser, deleteUser } = require("../controllers/userController")
+const {auth} = require("../middleware/authmiddleware")
 
 /* GET users listing. */
 router.route('/').get(getAllUsers).post(saveUser)
