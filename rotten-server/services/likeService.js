@@ -5,6 +5,10 @@ exports.createLike = async (like) => {
    return await newlike.save()
 }
 
+exports.totalLikes = async () => {
+   return await likeModel.countDocuments()
+}
+
 exports.findLikeById = async (id) => {
    const like = await likeModel.findById(id)
    return like

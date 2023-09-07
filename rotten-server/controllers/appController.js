@@ -63,3 +63,12 @@ exports.moviesToGenre = async (req, res) => {
       res.status(400).json({error})
    }
 }
+
+exports.getKpi = async (req, res) => {
+   try {
+      const data = await appService.kpi()
+      res.json(data)
+   } catch (error) {
+      res.status(400).json({error})
+   }
+}

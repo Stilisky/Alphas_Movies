@@ -4,6 +4,10 @@ exports.findAllusers = async () => {
    return await userModel.find();
 } 
 
+exports.totalUsers = async () => {
+   return await userModel.countDocuments()
+}
+
 exports.createUser = async (user) => {
    const newUser = new userModel(user)
    return await newUser.save();
