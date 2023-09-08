@@ -4,6 +4,7 @@ import Admin from '../components/Admin'
 
 
 const Page = () => {
+  if(!localStorage.getItem("token")) return (window.location.href = '/login')
   return (
     <AdminSidebar>
       <Admin/>

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import NewMovies from '../components/NewMovies'
 import MoviesTable from '../components/MoviesTable'
 
-const AdminMovies = ({movies, categories, reloadComp, films}) => {
+const AdminMovies = ({movies, categories, reloadComp}) => {
    const [modalOpen, setModalOp] = useState(false)
 
    const OpenModal = () => {
@@ -14,8 +14,6 @@ const AdminMovies = ({movies, categories, reloadComp, films}) => {
       setModalOp(false)
       reloadComp()
    }
-
-   
    
   return (
    <div>
@@ -29,7 +27,7 @@ const AdminMovies = ({movies, categories, reloadComp, films}) => {
                         </button>
                      </div>
                   </div>
-                  <NewMovies isOpen={modalOpen} onClose={onClose} categories={categories} films={films}/>
+                  <NewMovies isOpen={modalOpen} onClose={onClose} categories={categories} />
                   <div className="bg-white shadow-md rounded my-6">
                      <table className="min-w-max w-full table-auto">
                         <thead>

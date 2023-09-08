@@ -5,7 +5,7 @@ const {auth, authUser} = require("../middleware/authmiddleware")
 
 /* GET users listing. */
 router.route('/').get(authUser,getAllUsers).post(saveUser)
-router.route('/:id').get(getUserById).put(updateUser).delete(deleteUser)
+router.route('/:id').get(getUserById).put(authUser,updateUser).delete(deleteUser)
 router.route('/password/:id').put(updateUserPassword)
 // });
 
