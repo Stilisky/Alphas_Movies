@@ -174,3 +174,12 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Something wont wrong" });
   }
 };
+
+exports.mapMovies = async (req, res) => {
+  try {
+    const movie = await appService.moviesMapping(req.body)
+    res.status(201).json(movie)
+  } catch (error) {
+    res.status(400).json({ message: "Something wont wrong" });
+  }
+}

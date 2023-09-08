@@ -38,7 +38,7 @@ exports.createCommentAndAddToMovie = async (movieid, comment) => {
 exports.addCategoryToMovie = async (catid, movid) => {
    const cat = await categoryService.findCategoryById(catid)
    const movie = await movieService.findMovieById(movid)
-   movie.category.push(cat)
+   movie.category = cat
    const upmov = await movieService.updateMovie(movid, movie)
    return upmov
 }
@@ -64,7 +64,7 @@ exports.addMovieToGenre = async (movid, genid) => {
    const movie = await movieService.findMovieById(movid)
    genre.movies.push(movie)
    const upgen = await genreService.updateGenre(genid, genre)
-   return upmov
+   return upgen
 }
 
 exports.kpi = async () => {
@@ -83,4 +83,38 @@ exports.kpi = async () => {
       'category': cateT 
    }
    return data
+}
+
+exports.moviesMapping = async (data) => {
+   const cat =data.catName;
+   const gen = data.genres;
+   const mov = {
+      "title": data.title,
+      "description": data.description,
+      "language": data.language,
+      "release_date": data.release_date,
+      "image": data.image,
+      "director": data.director
+   }
+   // const existingUser = await userModel.findOne({ email: email });
+   const movie = await movieService.createMovies(mov);
+
+   //Cat and movie mapping
+   const categ = await categoryService.findCatByName(cat)
+   this.addCategoryToMovie(categ._id, movie._id);
+   this.addMovieToCategory(movie._id, categ._id);
+
+   //Genre and movie Mapping
+   const genre = await genreService.findGenreByName(gen);
+
+   if(genre){
+      this.addGenreToMovie(genre._id, movie._id)
+      this.addMovieToGenre(movie._id, genre._id)
+   } else {
+      const newgenre = await genreService.createGenre({name: gen})
+      this.addGenreToMovie(newgenre._id, movie._id)
+      this.addMovieToGenre(movie._id, newgenre._id)
+   }
+
+   return movie;
 }

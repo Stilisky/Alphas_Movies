@@ -1,43 +1,8 @@
 "use client"
-import React, { useState } from 'react'
-import Choicefilm from '../components/Choicefilm'
+import React, { useEffect, useState } from 'react'
+import FilmsTable from '../components/FilmsTable'
 
-const NewMovies = ({ isOpen, onClose, categories }) => {
-   const [catSel, setCat] = useState('')
-   
-   const [films, setFilms] = useState([])
-
-   const handleChoice = (value) => {
-      
-   }
-
-   const getfilms = async () => {
-      const bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmYyNjhhMzI5OTU4ODE5MDhjNmY4YTkzMzAyYjg3NiIsInN1YiI6IjY0ZjVkMzVhM2Q0M2UwMzg5MjNhYzBiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cSxuR1gE_VeGdUbPp06TWn0nUNS11WEt3rlT-zMV7kY"
-      try {
-         const url = 'https://api.themoviedb.org/3/movie/now_playing'
-         const response = await fetch(url, { headers: { "authorization": bearer } })
-         const data = await response.json()
-         setFilms(data.results)
-         console.log(films);
-      } catch (error) {
-
-      }
-   }
-
-   const choiceCat = async (event) => {
-      setCat(event.target.value)
-      // console.log(event.target.value);
-      getfilms(event.target.value);
-   }
-
-   const choiceMovie = async (event) => {
-      setMovie(event.target.value)
-
-   }
-
-   const createMovie = () => {
-
-   }
+const NewMovies = ({ isOpen, onClose, films, catName }) => {
 
    const closeMovie = () => {
       onClose()
@@ -47,7 +12,7 @@ const NewMovies = ({ isOpen, onClose, categories }) => {
    return (
       <div>
          <div className="py-12 bg-gray-700 bg-opacity-25 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0">
-            <div role="alert" className="container mx-auto w-11/12 md:w-2/3 max-w-lg">
+            <div role="alert" className="container mx-auto ">
                <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
                   <div className="w-full flex justify-start text-gray-600 mb-3">
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20">
@@ -55,19 +20,29 @@ const NewMovies = ({ isOpen, onClose, categories }) => {
                      </svg>
                   </div>
                   <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Upload Movie</h1>
-                  <div className="flex w-72 flex-col gap-6">
-                  <select value={catSel} onChange={choiceCat}>
-                     {categories.map((cat) => (
-                        <option key={cat._id} value={cat.name}>{cat.name}</option>
-                     ))}
-                  </select>
-                  <Choicefilm films={films} handle={handleChoice} />
+                  <div className="bg-white shadow-md rounded my-6">
+                     <table className="min-w-max w-full table-auto">
+                        <thead>
+                           <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                              <th className="py-3 px-6 text-left">Title</th>
+                              <th className="py-3 px-6 text-left">Release Date</th>
+                              <th className="py-3 px-6 text-center">Actions</th>
+                           </tr>
+                        </thead>
+                        <tbody className="text-gray-600 text-sm font-light">
+                           {films.map((film) => (
+                              <FilmsTable key={film.id} film={film} onClose={closeMovie} catName={catName}/>
+                           ))}
+                        </tbody>
+                     </table>
+                  </div>
+                  
                </div>
 
-               <div className="flex items-center justify-start w-full">
+               {/* <div className="flex items-center justify-start w-full">
                   <button onClick={createMovie} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">Submit</button>
                   <button className="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm" onClick={closeMovie} >Cancel</button>
-               </div>
+               </div> */}
                <button className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600" onClick={closeMovie} aria-label="close modal" role="button">
                   <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                      <path stroke="none" d="M0 0h24v24H0z" />
@@ -78,7 +53,6 @@ const NewMovies = ({ isOpen, onClose, categories }) => {
             </div>
          </div>
       </div>
-    </div >
    )
 }
 

@@ -17,6 +17,10 @@ exports.createGenre = async (genre) => {
    return await newGenre.save()
 }
 
+exports.findGenreByName = async (name) => {
+   return await genreModel.findOne({ name: name })
+}
+
 exports.deleteGenre = async (id) =>  {
    return await genreModel.findByIdAndDelete(id)
 }

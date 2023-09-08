@@ -6,6 +6,7 @@ const movieSchema = mongoose.Schema({
    language: {type: String, require: true},
    release_date: {type: Date, require: true},
    image: {type: String},
+   director: {type: String},
    fans: [{type: mongoose.Schema.Types.ObjectId, ref:'User'}],
    category: {type: mongoose.Schema.ObjectId, ref:'Category'},
    genre: {type: mongoose.Schema.ObjectId, ref:'Genre'},
