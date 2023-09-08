@@ -4,12 +4,15 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
   const [movieData, setMovieData] = useState(null);
   const [comment, setComment] = useState('');
   const [formData, setFormData] = useState({
+    favorites:[],
     username: '',
     email: '',
     id: ''
   });
 
   const [isInFavorites, setIsInFavorites] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -21,7 +24,6 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
     }
   }, [isVisible, movieId]);
 
-
   const getUser = async () => {
     try {
       const url = "http://127.0.0.1:5000/api/map/token";
@@ -29,22 +31,36 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
       const response = await fetch(url, {
         headers: { "Authorization": token }
       });
-
+  
       if (response.ok) {
         const data = await response.json();
+  
+        const movieIdToFind = movieId;
+        const isMovieInFavorites = data.favorites.includes(movieIdToFind);
+  
         setFormData({
+          favorites: data.favorites.join(', '),
           username: data.username,
           email: data.email,
           id: data.id
         });
+  
         console.log(formData);
+        console.log(movieIdToFind)
+  
+        if (isMovieInFavorites) {
+          setIsInFavorites(true);
+        } else {
+          console.log(`Le film avec l'ID ${movieIdToFind} n'est pas dans les favoris.`);
+        }
       } else {
-        console.error('Erreur lors de la récupération des données de l\'utilisateur.');
+        console.error("Erreur lors de la récupération des données de l'utilisateur.");
       }
     } catch (error) {
-      console.error('Erreur : ' + error);
+      console.error("Erreur : " + error);
     }
   };
+  
 
   const fetchMovieById = async () => {
     try {
@@ -95,13 +111,41 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
 
       if (response.ok) {
         console.log("ok");
-        fetchMovieById();
+        getUser();
         setIsInFavorites(true);
       }
     } catch (error) {
       console.error('Erreur : ' + error);
     }
   };
+
+  const addLike = async () => {
+    try {
+      if (!localStorage.getItem("token")) {
+        window.location.href = "/login";
+        return;
+      }
+  
+      const url = `http://127.0.0.1:5000/movies/${movieId}/like`; 
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        console.log("Le film a été aimé avec succès.");
+        fetchMovieById();
+        setIsLiked(true);
+      } else {
+        console.error("Erreur lors de l'ajout du like.");
+      }
+    } catch (error) {
+      console.error('Erreur : ' + error);
+    }
+  };
+  
 
 
   if (!isVisible) return null;
@@ -130,6 +174,7 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
           <div className="flex items-center px-3 py-2 rounded-lg space-x-2">
             <button
               id="addToFavorites"
+              disabled={isInFavorites}
               type="button"
               onClick={addToFavorites}
               className={`inline-flex justify-center p-2 text-green-500 border rounded-lg cursor-pointer hover:text-green-900 dark:text-green-400 dark:hover:text-white dark:hover:bg-gray-600 ${isInFavorites ? "bg-white" : ""}`}
@@ -139,7 +184,11 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
               </svg>
               <span className="sr-only">Add to favorites</span>
             </button>
-            <button id='like' type="button" className="p-2 text-gray-500 border rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <button id='like'
+              onClick={addLike} 
+             type="button" 
+             className={`p-2 text-gray-500 border rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 ${isLiked ? "bg-white" : ""}`}
+             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
               </svg>

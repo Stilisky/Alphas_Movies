@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import Billboard from '../components/Billboard';
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +25,7 @@ const Page = () => {
       if (response.ok) {
         const data = await response.json();
         setFormData({
+          favorites: data.favorites,
           username: data.username,
           email: data.email,
           id: data.id
@@ -40,10 +42,12 @@ const Page = () => {
   return (
     <div>
       <Navbar />
+      <Billboard />
       <div className='text-white'>
         <h1>Username: {formData.username}</h1>
         <h1>Email: {formData.email}</h1>
         <h1>ID: {formData.id}</h1>
+        <h1>favorites: {formData.favorites}</h1>
       </div>
     </div>
   );

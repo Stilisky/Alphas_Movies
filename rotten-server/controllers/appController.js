@@ -106,6 +106,17 @@ exports.getKpi = async (req, res) => {
    }
 }
 
+exports.checkUserFavorite = async (req, res) => {
+  const userid = req.params.userid
+  const movieid = req.params.movieid
+  const response = await appService.checkFavoris(userid,movieid)
+  if(response){
+    res.status(200)
+  } else {
+    res.status(400)
+  }
+}
+
 exports.register = async (req, res) => {
   //Fonction qui verifie l'existence ou non de l'utilisateur dans la bd
 try {
@@ -166,7 +177,7 @@ exports.login = async (req, res) => {
     }
     //Token generate
     const token = jwt.sign(
-      {id: existingUser._id, username: existingUser.username, email: existingUser.email, isAdmin : existingUser.isAdmin },
+      {id: existingUser._id, username: existingUser.username, email: existingUser.email, favorites:existingUser.favorites, isAdmin : existingUser.isAdmin },
       SECRET_KEY
     );
     res.status(201).json({ token });
@@ -174,3 +185,4 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Something wont wrong" });
   }
 };
+
