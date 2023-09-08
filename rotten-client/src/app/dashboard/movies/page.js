@@ -6,7 +6,7 @@ import AdminMovies from '../../components/AdminMovies'
 const page = () => {
   const [categories, setCat] = useState([])
   const [movies, setMovie] = useState([])
-  const [films, setFilms] = useState([])
+  // const [films, setFilms] = useState([])
 
   useEffect(()=> {
     getCategories()
@@ -23,17 +23,17 @@ const page = () => {
       
     }
   }
-  const getfilms = async () => {
-    try {
-       const bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmYyNjhhMzI5OTU4ODE5MDhjNmY4YTkzMzAyYjg3NiIsInN1YiI6IjY0ZjVkMzVhM2Q0M2UwMzg5MjNhYzBiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cSxuR1gE_VeGdUbPp06TWn0nUNS11WEt3rlT-zMV7kY"
-       const url = 'https://api.themoviedb.org/3/movie/now_playing'
-       const response = await fetch(url, {headers: {"authorization": bearer}})
-       const data = await response.json()
-       setFilms(data.results)
-    } catch (error) {
+  // const getfilms = async () => {
+  //   try {
+  //      const bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmYyNjhhMzI5OTU4ODE5MDhjNmY4YTkzMzAyYjg3NiIsInN1YiI6IjY0ZjVkMzVhM2Q0M2UwMzg5MjNhYzBiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cSxuR1gE_VeGdUbPp06TWn0nUNS11WEt3rlT-zMV7kY"
+  //      const url = 'https://api.themoviedb.org/3/movie/now_playing'
+  //      const response = await fetch(url, {headers: {"authorization": bearer}})
+  //      const data = await response.json()
+  //      setFilms(data.results)
+  //   } catch (error) {
        
-    }
-  }
+  //   }
+  // }
 
   const getMovies = async () => {
     try {
@@ -46,6 +46,7 @@ const page = () => {
     }
   }
 
+  if(!localStorage.getItem("token")) return (window.location.href = '/login')
   return (
     <AdminSidebar>
       <AdminMovies movies={movies} categories={categories} reloadComp={getMovies} />

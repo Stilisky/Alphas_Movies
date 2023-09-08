@@ -21,6 +21,7 @@ const page = () => {
     }
   }
 
+  if(!localStorage.getItem("token")) return (window.location.href = '/login')
   return (
     <AdminSidebar>
       <Users users={users} reloadComponent={findUsers}/>

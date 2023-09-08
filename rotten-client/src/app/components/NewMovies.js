@@ -4,54 +4,23 @@ import Choicefilm from '../components/Choicefilm'
 
 const NewMovies = ({ isOpen, onClose, categories }) => {
    const [catSel, setCat] = useState('')
-   const [movie, setMovie] = useState('')
+   
    const [films, setFilms] = useState([])
 
-   const getfilms = async (val) => {
+   const handleChoice = (value) => {
+      
+   }
+
+   const getfilms = async () => {
       const bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmYyNjhhMzI5OTU4ODE5MDhjNmY4YTkzMzAyYjg3NiIsInN1YiI6IjY0ZjVkMzVhM2Q0M2UwMzg5MjNhYzBiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cSxuR1gE_VeGdUbPp06TWn0nUNS11WEt3rlT-zMV7kY"
+      try {
+         const url = 'https://api.themoviedb.org/3/movie/now_playing'
+         const response = await fetch(url, { headers: { "authorization": bearer } })
+         const data = await response.json()
+         setFilms(data.results)
+         console.log(films);
+      } catch (error) {
 
-      switch (val) {
-         case "NOW PLAYING":
-            try {
-               const url = 'https://api.themoviedb.org/3/movie/now_playing'
-               const response = await fetch(url, { headers: { "authorization": bearer } })
-               const data = await response.json()
-               setFilms(data.results)
-               console.log(films);
-            } catch (error) {
-
-            }
-            break;
-         case "UP COMING":
-            try {
-               const url = 'https://api.themoviedb.org/3/movie/upcoming'
-               const response = await fetch(url, { headers: { "authorization": bearer } })
-               const data = await response.json()
-               setFilms(data.results)
-            } catch (error) {
-
-            }
-            break;
-         case "POPULAR":
-            try {
-               const url = 'https://api.themoviedb.org/3/movie/popular'
-               const response = await fetch(url, { headers: { "authorization": bearer } })
-               const data = await response.json()
-               setFilms(data.results)
-            } catch (error) {
-
-            }
-            break;
-         case "TOP RATED":
-            try {
-               const url = 'https://api.themoviedb.org/3/movie/top_rated'
-               const response = await fetch(url, { headers: { "authorization": bearer } })
-               const data = await response.json()
-               setFilms(data.results)
-            } catch (error) {
-
-            }
-            break;
       }
    }
 
@@ -87,14 +56,13 @@ const NewMovies = ({ isOpen, onClose, categories }) => {
                   </div>
                   <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Upload Movie</h1>
                   <div className="flex w-72 flex-col gap-6">
-                  <Choicefilm film={film} />
+                  <select value={catSel} onChange={choiceCat}>
+                     {categories.map((cat) => (
+                        <option key={cat._id} value={cat.name}>{cat.name}</option>
+                     ))}
+                  </select>
+                  <Choicefilm films={films} handle={handleChoice} />
                </div>
-
-               <label for="pass" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Password</label>
-               <inpu type='password' required id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Password" />
-
-               <label for="conf" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirm Password</label>
-               <input type='password' required id="conf" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Confirm Password" />
 
                <div className="flex items-center justify-start w-full">
                   <button onClick={createMovie} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">Submit</button>
