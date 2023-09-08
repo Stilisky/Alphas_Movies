@@ -1,11 +1,24 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function account_settings() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
   })
+  
+  useEffect(() => {
+    
+  })
+
+  const getUser = async () => {
+    try {
+      const token = localStorage.getItem("token")
+    } catch (error) {
+      
+    }
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -82,7 +95,7 @@ const [passwordFormData, setPasswordFormData] = useState({
       }
     };
 
-
+  if(!localStorage.getItem("token")) return (window.location.href = '/login')
   return (
     <section>
       <div class="flex justify-center">
