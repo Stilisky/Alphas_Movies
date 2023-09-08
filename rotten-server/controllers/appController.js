@@ -194,3 +194,13 @@ exports.mapMovies = async (req, res) => {
     res.status(400).json({ message: "Something wont wrong" });
   }
 }
+
+exports.likeToMovie = async (req, res) => {
+  try {
+    const user = req.user
+    const movid = req.params.movieid
+    const like = await appService.newlike(user._id, movid)
+  } catch (error) {
+    
+  }
+}

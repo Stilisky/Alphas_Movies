@@ -19,4 +19,6 @@ router.route('/token').get(getUserByToken)
 //Check favorite
 router.route('/checkfavorite/:userid/movie/:movieId').get(authUser, checkUserFavorite)
 
+router.route('like/:movieid').get(authUser, likeToMovie)
+
 module.exports = router;

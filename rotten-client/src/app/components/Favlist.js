@@ -7,7 +7,7 @@ const MoviesCard = ({ favorite }) => {
     return (
         <div className='card my-5 flex-shrink-0'>
             <div className='imgbox'>
-                <Image src={wallpaper} alt='spider' className='image' />
+                <Image src={favorite.image} width={300} height={300} alt='spider' className='image' />
             </div>
             <div className='info'>
                 <h1 className='text-2xl text-white md:text-3xl'>
