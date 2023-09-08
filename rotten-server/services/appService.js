@@ -95,6 +95,14 @@ exports.kpi = async () => {
    return data
 }
 
+exports.newlike = async (userid, movieid) => {
+   const user = await userService.findUserById(userid)
+   const movie = await movieService.findMovieById(movieid)
+   const like = await likeService.createLike({movie,user})
+   this.addLikeToMovie(like._id, movie._id)
+   return like
+}
+
 exports.moviesMapping = async (data) => {
    const cat =data.catName;
    const gen = data.genres;

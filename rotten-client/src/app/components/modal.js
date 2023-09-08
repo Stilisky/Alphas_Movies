@@ -126,10 +126,10 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
         return;
       }
   
-      const url = `http://127.0.0.1:5000/movies/${movieId}/like`; 
+      const url = `http://127.0.0.1:5000/api/map/like/${movieId}`; 
       const response = await fetch(url, {
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+          'authorization': 'Bearer ' + localStorage.getItem("token"),
           'Content-Type': 'application/json',
         },
       });
