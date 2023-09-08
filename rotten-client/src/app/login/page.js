@@ -31,7 +31,7 @@ export default function Login() {
         }),
       });
       if (response.ok) {
-        console.log("response ok")
+        window.location.href = "all-movies"
       } else {
         const errorData = await response.json();
 
@@ -124,7 +124,7 @@ export default function Login() {
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don’t have an account yet?{" "}
                   <a
-                    href="#"
+                    href="/register"
                     class="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Sign up

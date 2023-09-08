@@ -40,7 +40,7 @@ export default function Register() {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-       // si register est ok, redirection
+        window.location.href = "/login"
       } else {
         const errorData = await response.json();
 
@@ -143,7 +143,7 @@ export default function Register() {
               <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <a
-                  href="#"
+                  href="/login"
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login here
