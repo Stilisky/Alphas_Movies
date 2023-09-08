@@ -3,12 +3,48 @@ import React, { useEffect, useState } from 'react';
 const Mymodal = ({ isVisible, onClose, movieId }) => {
   const [movieData, setMovieData] = useState(null);
   const [comment, setComment] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    id: ''
+  });
+
+  const [isInFavorites, setIsInFavorites] = useState(false);
 
   useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getUser();
+    }
+
     if (isVisible && movieId) {
       fetchMovieById();
     }
   }, [isVisible, movieId]);
+
+
+  const getUser = async () => {
+    try {
+      const url = "http://127.0.0.1:5000/api/map/token";
+      const token = "Bearer " + localStorage.getItem("token");
+      const response = await fetch(url, {
+        headers: { "Authorization": token }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFormData({
+          username: data.username,
+          email: data.email,
+          id: data.id
+        });
+        console.log(formData);
+      } else {
+        console.error('Erreur lors de la récupération des données de l\'utilisateur.');
+      }
+    } catch (error) {
+      console.error('Erreur : ' + error);
+    }
+  };
 
   const fetchMovieById = async () => {
     try {
@@ -45,6 +81,28 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
     }
   };
 
+  const addToFavorites = async () => {
+    try {
+      if (!localStorage.getItem("token")) {
+        window.location.href = "/login";
+        return;
+      }
+
+      const url = `http://127.0.0.1:5000/api/map/favorite/${formData.id}/movie/${movieId}`;
+      const response = await fetch(url, {
+        headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+      });
+
+      if (response.ok) {
+        console.log("ok");
+        fetchMovieById();
+        setIsInFavorites(true);
+      }
+    } catch (error) {
+      console.error('Erreur : ' + error);
+    }
+  };
+
 
   if (!isVisible) return null;
 
@@ -70,11 +128,16 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
           </div>
           <label htmlFor="chat" className="sr-only">Your comment</label>
           <div className="flex items-center px-3 py-2 rounded-lg space-x-2">
-            <button id='addTofavorite' type="button" className="inline-flex justify-center p-2 text-gray-500 border rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <button
+              id="addToFavorites"
+              type="button"
+              onClick={addToFavorites}
+              className={`inline-flex justify-center p-2 text-green-500 border rounded-lg cursor-pointer hover:text-green-900 dark:text-green-400 dark:hover:text-white dark:hover:bg-gray-600 ${isInFavorites ? "bg-white" : ""}`}
+            >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
               </svg>
-              <span className="sr-only">Upload image</span>
+              <span className="sr-only">Add to favorites</span>
             </button>
             <button id='like' type="button" className="p-2 text-gray-500 border rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
