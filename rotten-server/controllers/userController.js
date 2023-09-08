@@ -56,7 +56,8 @@ exports.updateUserPassword = async(req, res) => {
 //get user favorites list
 exports.Myfavorites = async (req, res) => {
    const user = await userService.findUserById(req.params.id)
-   const favorites = user.favorites
+   const favorites = await user.favorites
+   // console.log("log du back \n" + favorites);
    res.json(favorites)
 }
 

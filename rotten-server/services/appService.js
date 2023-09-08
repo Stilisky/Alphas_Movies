@@ -29,6 +29,16 @@ exports.addcommentToMovie = async (comid, movid) => {
    return upmov
 }
 
+exports.checkFavoris = async (userid, movieid) => {
+   const user = await userService.findUserById(userid)
+   const movie = await movieService.findMovieById(movieid)
+   if(user.favorites.includes(movie)) {
+      return true
+   } else {
+      return false
+   }
+}
+
 exports.createCommentAndAddToMovie = async (movieid, comment) => {
    const com = await commentService.createComment(comment)
    const movie = await this.addcommentToMovie(com._id, movieid)
