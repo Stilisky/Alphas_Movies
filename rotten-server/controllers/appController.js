@@ -166,7 +166,7 @@ exports.login = async (req, res) => {
     }
     //Token generate
     const token = jwt.sign(
-      { email: existingUser.email, id: existingUser._id, isAdmin : existingUser.isAdmin },
+      {id: existingUser._id, username: existingUser.username, email: existingUser.email, isAdmin : existingUser.isAdmin },
       SECRET_KEY
     );
     res.status(201).json({ token });
