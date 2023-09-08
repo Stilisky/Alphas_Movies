@@ -48,7 +48,7 @@ const page = () => {
 
   return (
     <AdminSidebar>
-      <AdminMovies movies={movies} categories={categories} reloadComp={getMovies} films={films}/>
+      <AdminMovies movies={movies} categories={categories} reloadComp={getMovies} />
     </AdminSidebar>
   )
 }

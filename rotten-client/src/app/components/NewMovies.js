@@ -1,51 +1,64 @@
 "use client"
 import React, { useState } from 'react'
 
-const NewMovies = ({isOpen, onClose, categories, films}) => {
+const NewMovies = ({isOpen, onClose, categories}) => {
    const [catSel, setCat] = useState('')
    const [movie, setMovie] = useState('')
+   const [films, setFilms] = useState([])
+
+   const getfilms = async (val) => {
+      const bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNmYyNjhhMzI5OTU4ODE5MDhjNmY4YTkzMzAyYjg3NiIsInN1YiI6IjY0ZjVkMzVhM2Q0M2UwMzg5MjNhYzBiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cSxuR1gE_VeGdUbPp06TWn0nUNS11WEt3rlT-zMV7kY"
+      
+      switch (val) {
+         case "NOW PLAYING":
+            try {
+               const url = 'https://api.themoviedb.org/3/movie/now_playing'
+               const response = await fetch(url, {headers: {"authorization": bearer}})
+               const data = await response.json()
+               setFilms(data.results)
+               console.log(films);
+            } catch (error) {
+               
+            }
+            break;
+         case "UP COMING":
+            try {
+               const url = 'https://api.themoviedb.org/3/movie/upcoming'
+               const response = await fetch(url, {headers: {"authorization": bearer}})
+               const data = await response.json()
+               setFilms(data.results)
+            } catch (error) {
+               
+            }
+            break;
+         case "POPULAR":
+            try {
+               const url = 'https://api.themoviedb.org/3/movie/popular'
+               const response = await fetch(url, {headers: {"authorization": bearer}})
+               const data = await response.json()
+               setFilms(data.results)
+            } catch (error) {
+               
+            }
+            break;
+         case "TOP RATED":
+            try {
+               const url = 'https://api.themoviedb.org/3/movie/top_rated'
+               const response = await fetch(url, {headers: {"authorization": bearer}})
+               const data = await response.json()
+               setFilms(data.results)
+            } catch (error) {
+               
+            }
+            break;
+      }
+   }
 
    const choiceCat = async (event) => {
       setCat(event.target.value)
+      // console.log(event.target.value);
+      getfilms(event.target.value);
    }
-
-   
-      // switch (val) {
-      //    case "NOW PLAYING":
-            
-
-      //       break;
-      //    case "UP COMING":
-      //       try {
-      //          const url = 'https://api.themoviedb.org/3/movie/upcoming'
-      //          const response = await fetch(url, {headers: {"authorization": bearer}})
-      //          const data = await response.json()
-      //          setFilms(data.results)
-      //       } catch (error) {
-               
-      //       }
-      //       break;
-      //    case "POPULAR":
-      //       try {
-      //          const url = 'https://api.themoviedb.org/3/movie/popular'
-      //          const response = await fetch(url, {headers: {"authorization": bearer}})
-      //          const data = await response.json()
-      //          setFilms(data.results)
-      //       } catch (error) {
-               
-      //       }
-      //       break;
-      //    case "TOP RATED":
-      //       try {
-      //          const url = 'https://api.themoviedb.org/3/movie/top_rated'
-      //          const response = await fetch(url, {headers: {"authorization": bearer}})
-      //          const data = await response.json()
-      //          setFilms(data.results)
-      //       } catch (error) {
-               
-      //       }
-      //       break;
-      // }
 
    const choiceMovie = async (event) => {
       setMovie(event.target.value)
@@ -76,20 +89,20 @@ const NewMovies = ({isOpen, onClose, categories, films}) => {
                   
                   <select value={catSel} onChange={choiceCat}>
                      {categories.map((cat) => (
-                        <option key={cat._id} value={cat._id}>{cat.name}</option>
+                        <option key={cat._id} value={cat.name}>{cat.name}</option>
                      ))}
                   </select>
                   <label>Choice film</label>
                   <select value={movie} onChange={choiceMovie}>
-                     <option>default</option>
-                     
+                     {/* <option>default</option> */}
+                     {films && films.map((film) => {
+                        // console.log(films);
+                        <option key={film.id}>Test</option>
+                        // <div>{film.title}</div>
+                     })}
                   </select>
                </div>
-               {films.map((film) => {
-                  // console.log(film);
-                  <div key={film.id}>{film.title}</div>
-                  // <div>{film.title}</div>
-               })}
+
                <label for="pass" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Password</label>
                <inpu type='password' required id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Password" />
 
