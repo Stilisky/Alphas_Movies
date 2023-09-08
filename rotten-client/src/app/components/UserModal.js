@@ -33,12 +33,14 @@ const UserModal = ({isOpen, onClose}) => {
          const data = {
             "username": username,
             "email": email,
-            "password": password
+            "password": password,
+            "confirm": password
          }
          try {
-            const url = "http://127.0.0.1:5000/users"
-            console.log(data);
-            await fetch(url, {method: 'POST', headers: {"content-Type": "application/json"}, body: JSON.stringify(data)});
+            const bearer = "Bearer " + localStorage.getItem("token")
+            const url = "http://127.0.0.1:5000/api/map/register"
+            // console.log(data);
+            await fetch(url, {method: 'POST', headers: {"content-Type": "application/json", "authorization": bearer}, body: JSON.stringify(data)});
             onClose()
          } catch (error) {
             console.log(error);

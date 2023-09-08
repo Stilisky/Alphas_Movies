@@ -37,8 +37,9 @@ const UserInfo = ({user, id, reloadComp}) => {
             "isAdmin": true
          }
          const url = "http://127.0.0.1:5000/users/" +id
+         const token = "Bearer " + localStorage.getItem("token")
          console.log(data);
-         await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json"}, body: JSON.stringify(data)});
+         await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json", "authorization": token}, body: JSON.stringify(data)});
          reloadComp()
       } catch (error) {
          
@@ -54,8 +55,9 @@ const UserInfo = ({user, id, reloadComp}) => {
             "isAdmin": false
          }
          const url = "http://127.0.0.1:5000/users/" +id
+         const token = "Bearer " + localStorage.getItem("token")
          console.log(data);
-         await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json"}, body: JSON.stringify(data)});
+         await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json", "authorization": token}, body: JSON.stringify(data)});
          reloadComp()
       } catch (error) {
          

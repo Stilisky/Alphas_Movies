@@ -37,8 +37,9 @@ const UpdateUser = ({isOpen, closeModal, user, update}) => {
                "password": password,
             }
             const url = "http://127.0.0.1:5000/users/" +user._id
+            const bearer = "Bearer " + localStorage.getItem("token")
             console.log(data);
-            await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json"}, body: JSON.stringify(data)});
+            await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json", "authorization": bearer }, body: JSON.stringify(data)});
             update()
          } catch (error) {
             

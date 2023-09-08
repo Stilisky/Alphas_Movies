@@ -6,15 +6,22 @@ const AccountInfo = ({ user }) => {
    const [email, setEmail] = useState(user.email);
   const [id, setId] = useState(user.id);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  const handleChangeUsername = (e) => {
+    setName(e.target.value)
+  };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value)
   };
 
   const handleSubmit = async (e) => {
     const token = "Bearer " + localStorage.getItem("token");
     e.preventDefault();
     try {
+      const formData = {
+        "username": username,
+        "email": email
+      }
       const response = await fetch("http://localhost:5000/users/" + id, {
         method: "PUT",
         headers: {
@@ -35,8 +42,7 @@ const AccountInfo = ({ user }) => {
   };
 
   return (
-   
-    <form onSubmit={handleSubmit}>
+    <div>
       <div class="form-group mb-6">
         <label class="form-label inline-block mb-2 font-bold text-white">
           USERNAME
@@ -46,7 +52,7 @@ const AccountInfo = ({ user }) => {
           name="username"
           for="username"
           value={username}
-          onChange={handleChange}
+          // onChange={handleChangeUsername}
           class="form-control block
               w-full
               px-3
@@ -73,7 +79,7 @@ const AccountInfo = ({ user }) => {
           type="email"
           name="email"
           value={email}
-          onChange={handleChange}
+          // onChange={handleChangeEmail}
           class="form-control block
               w-full
               px-3
@@ -94,13 +100,13 @@ const AccountInfo = ({ user }) => {
       </div>
       <div class="flex justify-end gap-3">
         <button
-          type="submit"
+          onClick={handleSubmit}
           class="border hover:bg-white hover:text-black text-blue-50 rounded-lg py-2 px-4 mt-5"
         >
           Save
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 

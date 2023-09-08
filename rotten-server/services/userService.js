@@ -27,21 +27,21 @@ exports.deleteUser = async (id) => {
    return await userModel.findByIdAndDelete(id)
 }
 
-exports.updateUserPassword = async(id, incoming)=> {
-   user = await userModel.findById(id)
-   if (user.password == incoming.oldPassword) { 
-      user.password = incoming.newPassword
-      return await userModel.findByIdAndUpdate(id, user)
-   }
-}
-
 // exports.updateUserPassword = async(id, incoming)=> {
-//    const user = await userModel.findById(id)
-//    const isOldPasswordValid = await bcrypt.compare(user.password, incoming.oldPassword)
-//    if (isOldPasswordValid) {
-//       const newPassword = incoming.newPassword
-//       hashedNewPassword = await bcrypt.hash(newPassword, 10)
-//       user.password = hashedNewPassword
+//    user = await userModel.findById(id)
+//    if (user.password == incoming.oldPassword) { 
+//       user.password = incoming.newPassword
 //       return await userModel.findByIdAndUpdate(id, user)
 //    }
 // }
+
+exports.updateUserPassword = async(id, incoming)=> {
+   const user = await userModel.findById(id)
+   const isOldPasswordValid = await bcrypt.compare(user.password, incoming.oldPassword)
+   if (isOldPasswordValid) {
+      const newPassword = incoming.newPassword
+      hashedNewPassword = await bcrypt.hash(newPassword, 10)
+      user.password = hashedNewPassword
+      return await userModel.findByIdAndUpdate(id, user)
+   }
+}

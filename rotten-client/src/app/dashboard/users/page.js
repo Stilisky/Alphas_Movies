@@ -13,7 +13,8 @@ const page = () => {
   const findUsers = async () => {
     try {
       const url = "http://127.0.0.1:5000/users"
-      const responses = await fetch(url);
+      const bearer = "Bearer " + localStorage.getItem("token")
+      const responses = await fetch(url, {headers:{ "authorization": bearer }});
       const data = await responses.json()
       setUsers(data) 
     } catch (error) {
