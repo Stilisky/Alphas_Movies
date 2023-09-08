@@ -105,6 +105,7 @@ exports.getKpi = async (req, res) => {
       res.status(400).json({error})
    }
 }
+
 exports.register = async (req, res) => {
   //Fonction qui verifie l'existence ou non de l'utilisateur dans la bd
 try {
@@ -139,13 +140,14 @@ try {
       password: hashedPassword,
       username: username,
     });
-
-    console.log(result);
-
-    const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY);
-    res.status(201).json({ user: result, token: token });
+    
+    const newUser = {
+      id: result._id,
+      username: result.username,
+      email: result.email
+    }
+    res.status(201).json({ newUser });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Something wont wrong" });
   }
 };
@@ -162,13 +164,13 @@ exports.login = async (req, res) => {
     if (!matchPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
+    //Token generate
     const token = jwt.sign(
-      { email: existingUser.email, id: existingUser._id },
+      { email: existingUser.email, id: existingUser._id, isAdmin : existingUser.isAdmin },
       SECRET_KEY
     );
-    res.status(201).json({ user: existingUser, token: token });
+    res.status(201).json({ token });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Something wont wrong" });
   }
 };
