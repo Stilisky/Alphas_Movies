@@ -1,7 +1,7 @@
 const movieModel = require("../models/Movie")
 
 exports.findAllMovies = async () => {
-   return await movieModel.find();
+   return await movieModel.find().populate("genre");
 }
 
 exports.totalMovies = async () => {

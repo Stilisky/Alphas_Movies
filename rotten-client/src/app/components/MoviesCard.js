@@ -9,7 +9,7 @@ const MoviesCard = ({ data }) => {
   return (
     <div className='card my-5 flex-shrink-0'>
       <div className='imgbox'>
-        <Image src={wallpaper} alt='spider' className='image' />
+        <Image src={data.image} width={300} height={300} alt='spider' className='image' />
       </div>
       <div className='info'>
         <h1 className='text-2xl md:text-3xl'>
@@ -21,7 +21,7 @@ const MoviesCard = ({ data }) => {
             type="button"
             className={`inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-black bg-[#b3b3b3] rounded-lg w-fit hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${showModal ? 'hidden' : 'block'}`}
           >
-            Action
+            {data.director}
           </button>
           <button
             type="button"
