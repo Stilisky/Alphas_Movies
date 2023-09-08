@@ -124,12 +124,12 @@ try {
 
     const existingUser = await userModel.findOne({ email: email });
     if (existingUser) {
-      return res.status(400).json({ message: "Sorry user already exists" });
+      return res.status(400).json({ message: "Sorry email already exists" });
     }
 
     const existingUsername = await userModel.findOne({ username: username });
     if (existingUsername) {
-      return res.status(400).json({ message: "Sorry user already exists" });
+      return res.status(400).json({ message: "Sorry username already exists" });
     }
     // Hachons le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -146,7 +146,7 @@ try {
     res.status(201).json({ user: result, token: token });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Something wont wrong" });
+    res.status(500).json({ message: "Make sure your email and username are of the right format !" });
   }
 };
 
