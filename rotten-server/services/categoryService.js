@@ -1,7 +1,7 @@
 const categoryModel = require("../models/Category")
 
 exports.findCategories = async () => {
-   return await categoryModel.find();
+   return await categoryModel.find().populate("movies");
 }
 
 exports.findCategoryById = async (id) => {

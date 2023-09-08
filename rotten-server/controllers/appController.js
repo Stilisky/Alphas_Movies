@@ -64,6 +64,15 @@ exports.moviesToGenre = async (req, res) => {
    }
 }
 
+exports.createcommentAndAddToMovie = async (req, res) => {
+   try {
+      const mov = await appService.createCommentAndAddToMovie(req.params.movieid, req.body)
+      res.json(mov)
+   } catch (error) {
+      res.status(400).json({error})
+   }
+}
+
 exports.getKpi = async (req, res) => {
    try {
       const data = await appService.kpi()

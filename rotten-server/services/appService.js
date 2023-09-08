@@ -29,6 +29,12 @@ exports.addcommentToMovie = async (comid, movid) => {
    return upmov
 }
 
+exports.createCommentAndAddToMovie = async (movieid, comment) => {
+   const com = await commentService.createComment(comment)
+   const movie = await this.addcommentToMovie(com._id, movieid)
+   return movie
+}
+
 exports.addCategoryToMovie = async (catid, movid) => {
    const cat = await categoryService.findCategoryById(catid)
    const movie = await movieService.findMovieById(movid)
