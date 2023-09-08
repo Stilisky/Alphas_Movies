@@ -4,6 +4,10 @@ exports.findAllMovies = async () => {
    return await movieModel.find();
 }
 
+exports.totalMovies = async () => {
+   return await movieModel.countDocuments()
+}
+
 exports.createMovies = async (movie) => {
    const newMovie = new movieModel(movie)
    return await newMovie.save();

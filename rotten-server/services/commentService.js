@@ -4,6 +4,10 @@ exports.findAllComments = async() => {
    return await commentModel.find()
 }
 
+exports.TotalComments = async() => {
+   return await commentModel.countDocuments()
+}
+
 exports.findCommentById = async (id) => {
    return await commentModel.findById(id).populate("movie").populate("user")
 }

@@ -60,3 +60,21 @@ exports.addMovieToGenre = async (movid, genid) => {
    const upgen = await genreService.updateGenre(genid, genre)
    return upmov
 }
+
+exports.kpi = async () => {
+   userT = await userService.totalUsers()
+   movieT = await movieService.totalMovies()
+   likeT = await likeService.totalLikes()
+   genreT = await genreService.totalGenres()
+   commentT = await commentService.TotalComments()
+   cateT = await categoryService.totalCats()
+   const data = {
+      'user' : userT,
+      'movie': movieT,
+      'like': likeT,
+      'genre': genreT,
+      'comment': commentT,
+      'category': cateT 
+   }
+   return data
+}

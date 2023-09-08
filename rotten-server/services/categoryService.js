@@ -8,6 +8,10 @@ exports.findCategoryById = async (id) => {
    return await categoryModel.findById(id).populate("movies")
 }
 
+exports.totalCats = async () => {
+   return await categoryModel.countDocuments()
+}
+
 exports.createCategory = async (category) => {
    const newCat = new categoryModel(category)
    return await newCat.save()

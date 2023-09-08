@@ -1,10 +1,14 @@
+import React from 'react'
+import AdminSidebar from '../components/AdminSidebar'
+import Admin from '../components/Admin'
 
 
-export default function Home() {
-   return (
-     <main>
-         
-     </main>
-   )
- }
- 
+const Page = () => {
+  return (
+    <AdminSidebar>
+      <Admin/>
+    </AdminSidebar>
+  )
+}
+
+export default Page

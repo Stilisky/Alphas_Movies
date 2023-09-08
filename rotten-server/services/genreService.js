@@ -4,6 +4,10 @@ exports.findGenres = async () => {
    return await genreModel.find();
 }
 
+exports.totalGenres = async () => {
+   return await genreModel.countDocuments()
+}
+
 exports.findGenreById = async (id) => {
    return await genreModel.findById(id).populate("movies")
 }
