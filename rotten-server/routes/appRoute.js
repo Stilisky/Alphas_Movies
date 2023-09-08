@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
 const {categoryToMovie, commentToMovie, favoriteToUser, genreToMovies, likeToMovie, movieToCategory, moviesToGenre, getKpi, createcommentAndAddToMovie, register, login, mapMovies} = require('../controllers/appController')
-const {getUserByToken} = require("../middleware/authmiddleware")
+const {authAdmin, authUser, getUserByToken} = require("../middleware/authmiddleware")
 
-router.route('/category/:catid/movie/:movieid').get(categoryToMovie)
-router.route('/movie/:movieid/category/:catid').get(movieToCategory)
-router.route('/comment/:commentid/movie/:movieid').get(commentToMovie)
-router.route('/favorite/:userid/movie/:movieid').get(favoriteToUser)
-router.route('/genre/:genreid/movie/:movieid').get(genreToMovies)
-router.route('/kpi').get(getKpi)
+router.route('/category/:catid/movie/:movieid').get(authUser, categoryToMovie)
+router.route('/movie/:movieid/category/:catid').get(authUser, movieToCategory)
+router.route('/comment/:commentid/movie/:movieid').get(authUser, commentToMovie)
+router.route('/favorite/:userid/movie/:movieid').get(authUser, favoriteToUser)
+router.route('/genre/:genreid/movie/:movieid').get(authUser, genreToMovies)
+router.route('/kpi').get(authAdmin, getKpi)
 router.route('/movies').post(mapMovies)
-router.route('/movie/:movieid/comment').post(createcommentAndAddToMovie)
+router.route('/movie/:movieid/comment').post(authUser, createcommentAndAddToMovie)
 //Login and register
 router.route('/register').post(register)
 router.route('/login').post(login)
