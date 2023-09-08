@@ -8,10 +8,9 @@ exports.adminAuth = (req, res, next) => {
         if (err) {
           return res.status(401).json({ message: "Not authorized" });
         } else {
-          if (decodedToken.role !== "admin") {
+          if (!decodedToken.isAdmin) {
             return res.status(401).json({ message: "Not authorized" });
           } else {
-              //req.user = user
             next();
           }
         }
