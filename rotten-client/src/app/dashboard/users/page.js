@@ -7,7 +7,6 @@ const page = () => {
   const [users, setUsers] = useState([])
 
    useEffect (() => {
-      console.log("use effect call");
       findUsers()
    },[])
 
