@@ -16,8 +16,10 @@ function Navbar() {
   const toggleMobileMenu = useCallback(() => {
     setshowMobileMenu((current) => !current);
   }, []);
+  const [admin, setAdmin] = useState(false)
 
   useEffect(() => {
+    
     const handleScroll = () => {
       if (window.scrollX >= TOP_OFFSET) {
         setshowBackground(true);
