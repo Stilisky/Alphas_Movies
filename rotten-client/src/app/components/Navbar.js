@@ -1,7 +1,9 @@
 "use client"
 import React, { useCallback, useEffect, useState } from 'react'
 import NavbarItem from './NavbarItem'
-import { BsChevronDown, BsSearch } from 'react-icons/bs';
+import { BsChevronDown } from 'react-icons/bs';
+import { FiLogOut } from 'react-icons/fi';
+import { RiAccountPinBoxLine } from 'react-icons/ri';
 import MobileMenu from './MobileMenu';
 import { Button } from 'flowbite-react';
 import { ButtonBase } from 'flowbite-react/lib/esm/components/Button/ButtonBase';
@@ -46,33 +48,22 @@ function Navbar() {
         </div>
         <div onClick={toggleMobileMenu} className='lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative'>
           <p className='text-sm text-white'>Browse</p>
-          <BsChevronDown className='text-white transition' />
+          <BsChevronDown className='text-white transition h-6 w-6' />
           <MobileMenu isVisible={showMobileMenu} />
         </div>
         <div className='flex flex-row ml-auto gap-7 items-center'>
-          <div className='text-gray-200 hover:text-gray-300 cursor-pointer'>
-            <BsSearch />
-          </div>
           <div>
             {localStorage.getItem("token") ? (
               <>
-<button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
-    <span class="sr-only">Open user menu</span>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 bg-white rounded-full">
-  <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
-</svg>
-</button>
-<div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">  
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
-      <li>
-        <a href="/account_settings" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-    </ul>
-    <div class="py-2">
-      <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</a>
-    </div>
-</div>
-                </>
+                <div className='flex space-x-3'>
+                  <a href='/account'>
+                    <RiAccountPinBoxLine className='text-white h-6 w-6' />
+                  </a>
+                  <a href='/logout'>
+                    <FiLogOut className='text-white h-6 w-6' />
+                  </a>
+                </div>
+              </>
             ) : (
               <div className='text-gray-200 hover:text-gray-300 cursor-pointer'>
                 <a href='/login'>Login</a>

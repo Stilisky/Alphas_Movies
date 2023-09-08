@@ -2,19 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Billboard from '../components/Billboard';
+import Favlist from '../components/Favlist';
 
 const Page = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    id: ''
-  });
+  // const [formData, setFormData] = useState({
+  //   favorites: [],
+  //   username: '',
+  //   email: '',
+  //   id: ''
+  // });
+  const [user, setUser] = useState([])
 
   useEffect(() => {
-    getUser();
+    getUserToken();
   }, []);
 
-  const getUser = async () => {
+  const getUserToken = async () => {
     try {
       const url = "http://127.0.0.1:5000/api/map/token";
       const token = "Bearer " + localStorage.getItem("token");
@@ -24,13 +27,14 @@ const Page = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setFormData({
-          favorites: data.favorites,
-          username: data.username,
-          email: data.email,
-          id: data.id
-        });
-        console.log(formData);
+        // setFormData({
+        //   favorites: data.favorites,
+        //   username: data.username,
+        //   email: data.email,
+        //   id: data.id
+        // });
+        // console.log(formData);
+        getUser(data.id)
       } else {
         console.error('Erreur lors de la récupération des données de l\'utilisateur.');
       }
@@ -39,15 +43,31 @@ const Page = () => {
     }
   };
 
+  const getUser = async (id) => {
+    try {
+      const url = "http://127.0.0.1:5000/users/myfavorites/" + id
+      const token = "Bearer " + localStorage.getItem("token");
+      const response = await fetch(url, {
+        headers: { "Authorization": token }
+      });
+      const data = await response.json()
+      setUser(data)
+      // console.log(data);
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div>
       <Navbar />
       <Billboard />
-      <div className='text-white'>
-        <h1>Username: {formData.username}</h1>
-        <h1>Email: {formData.email}</h1>
-        <h1>ID: {formData.id}</h1>
-        <h1>favorites: {formData.favorites}</h1>
+      <div className='text-white w-full'>
+        <div className='container mx-auto flex flex-wrap space-x-2'>
+          {user.map((favorite) => (
+            <Favlist key={user._id} favorite={favorite}/>
+          ))}
+        </div>
       </div>
     </div>
   );

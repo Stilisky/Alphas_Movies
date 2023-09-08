@@ -15,7 +15,7 @@ exports.createUser = async (user) => {
 }
 
 exports.findUserById = async (id) => {
-   return await userModel.findById(id)
+   return await userModel.findById(id).populate("favorites")
 }
 
 // Function to update a user's account details
