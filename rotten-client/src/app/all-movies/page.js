@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Billboard from '../components/Billboard'
 import MoviesLists from '../components/MoviesLists'
 import { useState, useEffect } from 'react'; // Importez useEffect
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -26,10 +28,12 @@ export default function Home() {
 
   return (
     <main>
+      <Navbar/>
       <Billboard />
       <div className='pb-40'>
         <MoviesLists data={movies} />
       </div>
+      <Footer/>
     </main>
   )
 }

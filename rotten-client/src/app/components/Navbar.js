@@ -32,9 +32,15 @@ function Navbar() {
       <div className={`px-5 md:px-16 py-6 flex flex-row items-center transition duration-500 ${showBackground ? 'bg-zinc-900 bg-opacity-90' : '' }`}>
         <p className='text-1xl md:text-2xl uppercase text-[#1ce783]'><strong>ALPHA'S MOVIES</strong></p>
         <div className='flex-row ml-8 gap-7 hidden lg:flex'>
-          <NavbarItem item="HOME" />
-          <NavbarItem item="MOVIES" />
-          <NavbarItem item="MY LISTS" />
+          <div className='text-white cursor-pointer hover:text-gray-300 transition'>
+              <a href='/'>HOME</a>
+          </div>
+          <div className='text-white cursor-pointer hover:text-gray-300 transition'>
+            <a href='/all-movies'>MOVIES</a>
+          </div>
+          <div className='text-white cursor-pointer hover:text-gray-300 transition'>
+            <a href='/favorites'>MY LISTS</a>
+          </div>
         </div>
         <div onClick={toggleMobileMenu} className='lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative'>
           <p className='text-sm text-white'>Browse</p>
@@ -46,7 +52,7 @@ function Navbar() {
             <BsSearch />
           </div>
           <div className='text-gray-200 hover:text-gray-300 cursor-pointer'>
-            Login
+            <a href='/login'>Login</a>
           </div>
         </div>
 
