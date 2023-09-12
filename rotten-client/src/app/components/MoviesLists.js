@@ -1,7 +1,7 @@
 import React from 'react';
 import MoviesCard from './MoviesCard';
 
-const MoviesLists = ({ data }) => {
+const MoviesLists = ({ data, updateMovie}) => {
   return (
     <>
       {data.map((categories) => (
@@ -10,9 +10,9 @@ const MoviesLists = ({ data }) => {
             <p className='text-white text-md md:text-xl lg:text-2xl font-semibold uppercase tracking'>
               {categories.name}
             </p>
-            <div className='text-white flex space-x-3 space-y-8 overflow-hidden overflow-x-scroll example1'>
+            <div className='text-white example flex space-x-3 space-y-8 overflow-hidden overflow-x-scroll example1'>
               {categories.movies.map((movie) => (
-                <MoviesCard key={movie._id} data={movie} />
+                <MoviesCard key={movie._id} data={movie} updatelist={updateMovie} />
               ))}
             </div>
           </div>

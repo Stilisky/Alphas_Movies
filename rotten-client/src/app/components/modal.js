@@ -80,10 +80,12 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
   const handleSubmitComment = async () => {
     try {
       const url = `http://127.0.0.1:5000/api/map/movie/${movieId}/comment`;
+      const token = "Bearer " + localStorage.getItem("token");
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          "Authorization": token
         },
         body: JSON.stringify({ description: comment }),
       });
@@ -93,7 +95,7 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
       setComment('')
       fetchMovieById()
     } catch (error) {
-      console.error('error: ' + error);
+      window.location.href = '/login'
     }
   };
 
@@ -115,7 +117,7 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
         setIsInFavorites(true);
       }
     } catch (error) {
-      console.error('Erreur : ' + error);
+      window.location.href = '/login'
     }
   };
 
@@ -126,16 +128,14 @@ const Mymodal = ({ isVisible, onClose, movieId }) => {
         return;
       }
   
-      const url = `http://127.0.0.1:5000/api/map/like/${movieId}`; 
+      const url = "http://127.0.0.1:5000/api/map/newlike/" + movieId; 
       const response = await fetch(url, {
-        headers: {
-          'authorization': 'Bearer ' + localStorage.getItem("token"),
-          'Content-Type': 'application/json',
-        },
+        method: 'POST',
+        headers: { "authorization": "Bearer " + localStorage.getItem("token")}
       });
   
       if (response.ok) {
-        console.log("Le film a été aimé avec succès.");
+        // console.log("Le film a été aimé avec succès.");
         fetchMovieById();
         setIsLiked(true);
       } else {

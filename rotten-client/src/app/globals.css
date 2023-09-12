@@ -16,6 +16,9 @@
     background-image: url(../../public/spider.jpg);
 }
 
+.example::-webkit-scrollbar {
+  display: none;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;

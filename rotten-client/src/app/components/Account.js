@@ -1,31 +1,99 @@
-import React from 'react'
-import AccountInfo from '../components/AccountInfo'
-import PassWordInfo from '../components/PassWordInfo'
+"use client"
+import React, { useState } from 'react'
+import UpdateUser from './UpdateUser'
 
 const Account = ({user}) => {
-  return (
-   <section>
-      <div class="flex justify-center">
-         <div class="w-[1000px] p-8">
+   const [username, setName] = useState(user.username);
+   const [password, setPass] = useState(user.password);
+   const [conf, setConf] = useState("");
+   const [email, setEmail] = useState(user.email);
 
-            <div class="flex-1 max-w-screen-2xl mx-auto text-white">
-               <div class="text-center text-3xl font-bold mt-10 uppercase">My Account</div>
-            </div>
-            <div class="flex item-center justify-center">
-               <div class="bg-black rounded-lg shadow-2xl w-3/4 m-4 my-10">
-               {/* {!passwordsMatch && <p className="text-red-500 text-center text-sm">Passwords do not match</p>} */}
+   const changeUsername = (event) => {
+      setName(event.target.value)
+   }
 
-                  <div class="px-14 py-5">
-                     <AccountInfo user={user} />
-                     <PassWordInfo id={user.id}  />
-                  </div>
+   const changeEmail = (event) => {
+      setEmail(event.target.value)
+   }
 
+   const changePassword = (event) => {
+      setPass(event.target.value)
+   }
 
+   const changeConf = (event) => {
+      setConf(event.target.value)
+   }
+
+   const closeMod = () => {
+      window.location.href = '/all-movies'
+   }
+
+   const updateUser = async () => {
+      if (username && email && (password == conf)) {
+         try {
+            const data = {
+               "username": username,
+               "email": email,
+               "password": password,
+            }
+            const url = "http://127.0.0.1:5000/users/" +user._id
+            const bearer = "Bearer " + localStorage.getItem("token")
+            console.log(data);
+            await fetch(url, {method: 'PUT', headers: {"content-Type": "application/json", "authorization": bearer }, body: JSON.stringify(data)});
+            window.location.href = '/all-movies'
+         } catch (error) {
+            
+         }
+      }
+      else {
+         setError("Invalid informations")
+      }
+   }
+
+   return (
+   <div>
+      <div className="py-12 bg-gray-700 bg-opacity-25 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0">
+         <div role="alert" className="container mx-auto w-11/12 md:w-2/3 max-w-lg">
+            <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+               <div className="w-full flex justify-start text-gray-600 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-20 h-20">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
                </div>
+               <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Update User</h1>
+               <label for="name" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Username</label>
+               <input id="name" onChange={changeUsername}  className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" value={username}/>
+               <label for="email" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Email</label>
+               <div className="relative mb-5 mt-2">
+                     <div className="absolute text-gray-600 flex items-center px-4 border-r h-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                           <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
+                        </svg>
+                     </div>
+                     <input onChange={changeEmail} type='email' id="email" className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-16 text-sm border-gray-300 rounded border" value={email} />
+               </div>
+
+               <label for="pass" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Password</label>
+               <input type='password' id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder='Password' onChange={changePassword} />
+               
+               <label for="confpass" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirm Password</label>
+               <input onChange={changeConf} type='password' id="pass" className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder='Confirm password' />
+
+               <div className="flex items-center justify-start w-full">
+                     <button onClick={updateUser} className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">Update User</button>
+                     <button className="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm" onClick={closeMod} >Cancel</button>
+               </div>
+               <button className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600" onClick={closeMod} aria-label="close modal" role="button">
+                     <svg  xmlns="http://www.w3.org/2000/svg"  className="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                     </svg>
+               </button>
             </div>
          </div>
       </div>
-   </section >
+   </div>
   )
 }
 

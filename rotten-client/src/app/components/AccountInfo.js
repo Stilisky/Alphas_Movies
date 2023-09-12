@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 
 const AccountInfo = ({ user }) => {
-  const [username, setName] = useState(user.username);
+  const [name, setName] = useState(user.username);
    const [email, setEmail] = useState(user.email);
-  const [id, setId] = useState(user.id);
 
   const handleChangeUsername = (e) => {
     setName(e.target.value)
@@ -14,15 +13,14 @@ const AccountInfo = ({ user }) => {
     setEmail(e.target.value)
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const token = "Bearer " + localStorage.getItem("token");
-    e.preventDefault();
     try {
       const formData = {
-        "username": username,
+        "username": name,
         "email": email
       }
-      const response = await fetch("http://localhost:5000/users/" + id, {
+      const response = await fetch("http://localhost:5000/users/" + user._id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -43,17 +41,17 @@ const AccountInfo = ({ user }) => {
 
   return (
     <div>
-      <div class="form-group mb-6">
-        <label class="form-label inline-block mb-2 font-bold text-white">
+      <div className="form-group mb-6">
+        <label className="form-label inline-block mb-2 font-bold text-white">
           USERNAME
         </label>
         <input
           type="text"
           name="username"
           for="username"
-          value={username}
+          value={name}
           // onChange={handleChangeUsername}
-          class="form-control block
+          className="form-control block
               w-full
               px-3
               py-1.5
@@ -71,8 +69,8 @@ const AccountInfo = ({ user }) => {
           placeholder=""
         />
       </div>
-      <div class="form-group mb-6">
-        <label class="form-label inline-block mb-2 text-white font-bold">
+      <div className="form-group mb-6">
+        <label className="form-label inline-block mb-2 text-white font-bold">
           Email
         </label>
         <input
@@ -80,7 +78,7 @@ const AccountInfo = ({ user }) => {
           name="email"
           value={email}
           // onChange={handleChangeEmail}
-          class="form-control block
+          className="form-control block
               w-full
               px-3
               py-1.5
@@ -98,10 +96,10 @@ const AccountInfo = ({ user }) => {
           placeholder=""
         />
       </div>
-      <div class="flex justify-end gap-3">
+      <div className="flex justify-end gap-3">
         <button
           onClick={handleSubmit}
-          class="border hover:bg-white hover:text-black text-blue-50 rounded-lg py-2 px-4 mt-5"
+          className="border hover:bg-white hover:text-black text-blue-50 rounded-lg py-2 px-4 mt-5"
         >
           Save
         </button>

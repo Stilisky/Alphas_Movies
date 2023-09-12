@@ -1,18 +1,11 @@
 "use client"
-import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Billboard from '../components/Billboard';
-import Favlist from '../components/Favlist';
+import React, { useEffect, useState } from 'react'
+import Account from '../components/Account'
+
 
 const Page = () => {
-  // const [formData, setFormData] = useState({
-  //   favorites: [],
-  //   username: '',
-  //   email: '',
-  //   id: ''
-  // });
-  const [user, setUser] = useState([])
-
+  const [utili, setutili] = useState({});
+  
   useEffect(() => {
     getUserToken();
   }, []);
@@ -37,33 +30,28 @@ const Page = () => {
   };
 
   const getUser = async (id) => {
+    let data;
     try {
-      const url = "http://127.0.0.1:5000/users/myfavorites/" + id
+      const url = "http://127.0.0.1:5000/users/" + id
       const token = "Bearer " + localStorage.getItem("token");
       const response = await fetch(url, {
         headers: { "Authorization": token }
       });
-      const data = await response.json()
-      setUser(data)
-      // console.log(data);
+      if(response.ok){
+        data = await response.json();
+      }
     } catch (error) {
       
     }
+    setutili(data);
+    // console.log(utili);
   }
 
   return (
     <div>
-      <Navbar />
-      <Billboard />
-      <div className='text-white w-full'>
-        <div className='container mx-auto flex flex-wrap space-x-2'>
-          {user.map((favorite) => (
-            <Favlist key={user._id} favorite={favorite} movieList={getUserToken}/>
-          ))}
-        </div>
-      </div>
+      <Account user={utili}/>
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

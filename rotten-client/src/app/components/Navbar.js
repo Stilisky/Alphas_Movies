@@ -16,10 +16,10 @@ function Navbar() {
   const toggleMobileMenu = useCallback(() => {
     setshowMobileMenu((current) => !current);
   }, []);
-  const [admin, setAdmin] = useState(false)
+  const [admin, setAdmin] = useState()
 
   useEffect(() => {
-    
+    checkAdmin()
     const handleScroll = () => {
       if (window.scrollX >= TOP_OFFSET) {
         setshowBackground(true);
@@ -32,6 +32,22 @@ function Navbar() {
       window.removeEventListener('scroll', handleScroll);
     }
   }, []);
+
+  const checkAdmin = async () => {
+    try {
+      const bearer = "Bearer " + localStorage.getItem("token")
+      const response = await fetch('http://localhost:5000/api/map/token', {
+        headers: {
+          'Content-Type': 'application/json',
+          "authorization": bearer
+        },
+      });
+      const data = await response.json()
+      console.log(data);
+     setAdmin(data.isAdmin)
+    } catch (error) {
+    }
+  }
 
   return (
     <nav className='w-full fixed z-40'>
@@ -57,14 +73,25 @@ function Navbar() {
           <div>
             {localStorage.getItem("token") ? (
               <>
+              {admin ? (
                 <div className='flex space-x-3'>
-                  <a href='/account'>
+                  <a href='/dashboard'>
                     <RiAccountPinBoxLine className='text-white h-6 w-6' />
                   </a>
                   <a href='/logout'>
                     <FiLogOut className='text-white h-6 w-6' />
                   </a>
                 </div>
+              ) : (
+                <div className='flex space-x-3'>
+                  <a href='/settings'>
+                    <RiAccountPinBoxLine className='text-white h-6 w-6' />
+                  </a>
+                  <a href='/logout'>
+                    <FiLogOut className='text-white h-6 w-6' />
+                  </a>
+                </div>
+              )}
               </>
             ) : (
               <div className='text-gray-200 hover:text-gray-300 cursor-pointer'>
