@@ -95,6 +95,15 @@ exports.kpi = async () => {
    return data
 }
 
+exports.unfavorite = async (userid, movieid) => {
+   const user = await userService.findUserById(userid)
+   user.favorites = user.favorites.filter((mov) => {
+      return mov._id.toString() !== movieid
+   })
+   const upuser = await userService.updateUser(userid, user)
+   return upuser
+}
+
 exports.newlike = async (userid, movieid) => {
    const user = await userService.findUserById(userid)
    const movie = await movieService.findMovieById(movieid)
@@ -105,7 +114,7 @@ exports.newlike = async (userid, movieid) => {
 
 exports.moviesMapping = async (data) => {
    const cat =data.catName;
-   const gen = data.genres;
+   const gen = data.genre;
    const mov = {
       "title": data.title,
       "description": data.description,
@@ -129,7 +138,7 @@ exports.moviesMapping = async (data) => {
       this.addGenreToMovie(genre._id, movie._id)
       this.addMovieToGenre(movie._id, genre._id)
    } else {
-      const newgenre = await genreService.createGenre({name: gen})
+      const newgenre = await genreService.createGenre({"name": gen})
       this.addGenreToMovie(newgenre._id, movie._id)
       this.addMovieToGenre(movie._id, newgenre._id)
    }

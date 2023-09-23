@@ -18,17 +18,17 @@ exports.favoriteToUser = async (req, res) => {
   }
 };
 
-exports.likeToMovie = async (req, res) => {
-  try {
-    const movie = await appService.addLikeToMovie(
-      req.params.likeid,
-      req.params.movieid
-    );
-    res.status(200).json(movie);
-  } catch (error) {
-    res.status(400).json({ error });
-  }
-};
+// exports.likeToMovie = async (req, res) => {
+//   try {
+//     const movie = await appService.addLikeToMovie(
+//       req.params.likeid,
+//       req.params.movieid
+//     );
+//     res.status(200).json(movie);
+//   } catch (error) {
+//     res.status(400).json({ error });
+//   }
+// };
 
 exports.commentToMovie = async (req, res) => {
   try {
@@ -200,7 +200,19 @@ exports.likeToMovie = async (req, res) => {
     const user = req.user
     const movid = req.params.movieid
     const like = await appService.newlike(user._id, movid)
+    res.status(201).json(like)
   } catch (error) {
-    
+    res.status(400).json({ message: "Something wont wrong" });
+  }
+}
+
+exports.unFavorite = async (req, res) => {
+  try {
+    const user = req.user
+    const movid = req.params.movieid
+    const upuser = await appService.unfavorite(user.id, movid)
+    res.status(200).json(upuser)
+  } catch (error) {
+    res.status(400).json({ message: "Something wont wrong" });
   }
 }

@@ -20,6 +20,9 @@ exports.findUserById = async (id) => {
 
 // Function to update a user's account details
 exports.updateUser = async (id, user) => {
+   if(user.password){
+      user.password = await bcrypt.hash(user.password, 10)
+   }
    return await userModel.findByIdAndUpdate(id, user)
 }
 
